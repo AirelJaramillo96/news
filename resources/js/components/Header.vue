@@ -48,7 +48,6 @@ export default {
     justify-content: space-between;
     padding: 10px;
     background-color: #2e54a7;
-    border-radius: 1rem;
 }
 
 .category-list {

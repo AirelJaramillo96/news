@@ -10,7 +10,6 @@
         <p class="card-body">
             {{article.description}}
         </p>
-
     </div>
 </template>
 <script>
