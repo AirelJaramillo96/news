@@ -20,3 +20,6 @@ Route::get('/', function () {
 
 
 Route::get('news', [NewsController::class, 'index']);
+
+Route::post('article/store', [NewsController::class, 'storeArticle']);
+Route::get('article/most_viewed', [NewsController::class, 'getMostViewedArticles']);

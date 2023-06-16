@@ -1,30 +1,75 @@
 <template>
-    <div class="card">
-        <div >
-            <img  class="card-image" :src="article.urlToImage" style="max-width: 100%;" alt="Image">
+    <div style="flex-flow: nowrap" class="relative flex w-full max-w-[68rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+        <div class="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
+            <img
+                :src="article.urlToImage"
+                alt="image"
+                class="h-full w-full object-cover"
+            />
         </div>
-        <p class="card-title">
-            <a :href="article.url" target="_blank">{{article.title}}</a>
-        </p>
-        <p class="author-title"> {{article.author}} - {{formatedDate(article.publishedAt)}} </p>
-        <p class="card-body">
-            {{article.description}}
-        </p>
-
+        <div class="p-6">
+            <h6 class="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
+                {{article.source.name}}
+            </h6>
+            <p class="author-title"> {{article.author}} - {{formatedDate(article.publishedAt)}} </p>
+            <h4 class="mb-2 mt-3 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                {{article.title}}
+            </h4>
+           <p class="mb-8 mt-4 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
+                {{article.description}}
+            </p>
+            <a class="inline-block" :href="article.url" target="_blank">
+                <button
+                    @click="storeArticle(article)"
+                    class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button"
+                >
+                    Learn More
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        class="h-4 w-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                        ></path>
+                    </svg>
+                </button>
+            </a>
+        </div>
     </div>
 </template>
 <script>
+import {storeArticle} from "../services/news.js";
+
 export default {
     name: 'Article',
     data() {
         return {
-            articles: []
         }
     },
     methods: {
         formatedDate(published_at) {
             let date = new Date(published_at);
             return date.toLocaleDateString();
+        },
+        storeArticle(article) {
+            let data = {
+                title: article.title,
+                url: article.url,
+                url_image: article.urlToImage,
+            }
+            storeArticle(data).then((response) => {
+               console.log('Article stored', response)
+            }).catch((error) => {
+                console.log(error);
+            });
         }
     },
     props: {
@@ -36,57 +81,12 @@ export default {
 }
 </script>
 <style>
-.card {
-    padding: 20px;
-    width: 330px;
-    min-height: 430px;
-    border-radius: 20px;
-    background: #ffffff;
-    box-shadow: 5px 5px 6px #dadada,
-    -5px -5px 6px #f6f6f6;
-    transition: 0.4s;
-}
-
-.card:hover {
-    translate: 0 -10px;
-}
-
-.card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #2e54a7;
-    margin: 15px 0 0 10px;
-}
 
 .author-title {
     color: black;
-    margin: 15px 0 0 10px;
     font-size: 12px;
 }
 
-.card-image {
-    min-height: 170px;
-    background-color: #c9c9c9;
-    border-radius: 15px;
-    box-shadow: inset 8px 8px 10px #c3c3c3,
-    inset -8px -8px 10px #cfcfcf;
-}
 
-.card-body {
-    margin: 13px 0 0 10px;
-    color: rgb(31, 31, 31);
-    font-size: 15px;
-}
-
-.footer {
-    float: right;
-    margin: 28px 0 0 18px;
-    font-size: 13px;
-    color: #636363;
-}
-
-.by-name {
-    font-weight: 700;
-}
 
 </style>
