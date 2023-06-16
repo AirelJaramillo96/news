@@ -1,9 +1,9 @@
 <template>
     <Header @search="searchNews" @search-by-query="searchByQuery"></Header>
-    <div class="news">
-        <div class="flex">
+    <div class="news lg:ml-40 sm:ml-0 md:ml-0 lg:mr-40 sm:mr-0 md:mr-0">
+        <div class="inline">
             <template v-for="(article, idx) in articles">
-                <div class="article-container">
+                <div class="mt-5">
                     <Article :article="article"></Article>
                 </div>
             </template>
@@ -45,6 +45,7 @@ export default {
             });
         },
         searchByQuery(query) {
+            console.log(query)
             console.log('searching...', query)
             this.params.q = query;
             getNews(this.params).then(response => {
@@ -60,10 +61,8 @@ export default {
     color: #2c3e50;
     margin: 1rem;
 }
-.flex {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.position {
+    display: inline;
 }
 .article-container {
     flex-basis: calc(25% - 1rem);
