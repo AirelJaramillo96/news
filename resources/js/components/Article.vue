@@ -20,6 +20,7 @@
             </p>
             <a class="inline-block" :href="article.url" target="_blank">
                 <button
+                    @click="storeArticle(article)"
                     class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button"
                 >
@@ -45,17 +46,30 @@
     </div>
 </template>
 <script>
+import {storeArticle} from "../services/news.js";
+
 export default {
     name: 'Article',
     data() {
         return {
-            articles: []
         }
     },
     methods: {
         formatedDate(published_at) {
             let date = new Date(published_at);
             return date.toLocaleDateString();
+        },
+        storeArticle(article) {
+            let data = {
+                title: article.title,
+                url: article.url,
+                url_image: article.urlToImage,
+            }
+            storeArticle(data).then((response) => {
+               console.log('Article stored', response)
+            }).catch((error) => {
+                console.log(error);
+            });
         }
     },
     props: {
