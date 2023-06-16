@@ -48,6 +48,7 @@ export default {
             categories: [
 
                 { name: 'All' },
+                { name: 'Business' },
                 { name: 'Sports' },
                 { name: 'Technology' },
                 { name: 'Entertainment' },
