@@ -31,7 +31,6 @@ class NewsController extends Controller
             $article->save();
             return response()->json(['message' => 'Article updated successfully'], 200);
         } else {
-            //use fill
             $article = new Article();
             $article->title = $request->title;
             $article->url_image = $request->url_image;
